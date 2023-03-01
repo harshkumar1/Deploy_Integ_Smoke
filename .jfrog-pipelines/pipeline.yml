@@ -3,46 +3,88 @@ resources:
     type: IncomingWebhook
     configuration:
       webhookName: docker_push_iw
-  - name: integration_test_info
-    type: BuildInfo
+  - name: run_prop_deploy
+    type: PropertyBag
     configuration:
-      sourceArtifactory: Artifactory
+      key1: value1
+      key2: value2
+  - name: run_prop_smoke
+    type: PropertyBag
+    configuration:
+      key1: value1
+      key2: value2
+  - name: run_prop_integration
+    type: PropertyBag
+    configuration:
+      key1: value1
+      key2: value2
 
 pipelines:
-  - name: integration_test
+  - name: test_env_deployment
     steps:
     - name: test_env_deploy
       type: Bash
       configuration:
         inputResources:
           - name: docker_push_webhook_res
-          - name: runpoppropin
+        outputResources:
+          - name: run_prop_deploy
       execution:
         onExecute:
           - echo "deploy"
+          - sleep 5
+        onSuccess:
+          - write_output run_prop_deploy runNumber=${run_number}
+
+  - name: smoke_test
     - name: smoketest
       type: Bash
       configuration:
-        inputSteps:
-          - name: test_env_deploy
+        inputResources:
+          - name: run_prop_deploy
+        outputResources:
+          - name: run_prop_smoke
       execution:
         onExecute:
           - echo "smoke_test"
+          - sleep 3
+        onSuccess:
+          - write_output run_prop_smoke runNumber=${run_number}
+
+  - name: integration_test
     - name: integration_test
       type: Bash
       configuration:
-        inputSteps:
-          - name: test_env_deploy
+        inputResources:
+          - name: run_prop_smoke
         outputResources:
-          - name: integration_test_info
+          - name: run_prop_integration
       execution:
         onExecute:
           - echo "smoke_test"
+          - sleep 10
+        onSuccess:
+          - write_output run_prop_integration runNumber=${run_number}
+
+  - name: promote_artifacts
     - name: promote_artifact
       type: Bash
       configuration:
         inputResources:
-          - name: integration_test_info
+          - name: run_prop_integration
       execution:
         onExecute:
           - echo "promote artifacts"
+          - sleep 2
+
+  - name: stag_env_deployment
+    steps:
+    - name: stag_env_deploy
+      type: Bash
+      configuration:
+        inputResources:
+          - name: run_prop_integration
+      execution:
+        onExecute:
+          - echo "staging deployment"
+          - sleep 10
