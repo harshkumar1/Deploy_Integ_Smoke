@@ -1,0 +1,33 @@
+resources:
+  - name: docker_push_webhook_res
+    type: IncomingWebhook
+    configuration:
+      webhookName: docker_push_iw
+ 
+pipelines:
+  - name: integration_test
+    steps:
+    - name: test_env_deploy
+      type: Bash
+      configuration:
+        inputResources:
+          - name: docker_push_webhook_res
+      execution:
+        onExecute:
+          - echo "deploy"
+    - name: smoketest
+      type: Bash
+      configuration:
+        inputResources:
+          - name: docker_push_webhook_res
+      execution:
+        onExecute:
+          - echo "smoke_test"
+    - name: promote_artifact
+      type: Bash
+      configuration:
+        inputResources:
+          - name: docker_push_webhook_res
+      execution:
+        onExecute:
+          - echo "promote artifacts"
