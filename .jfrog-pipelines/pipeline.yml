@@ -33,6 +33,7 @@ pipelines:
         onExecute:
           - echo "deploy"
           - sleep 5
+          - set_run_name "V${run_number}.0.0"
         onSuccess:
           - write_output run_prop_deploy runNumber=${run_number}
 
@@ -49,6 +50,7 @@ pipelines:
         onExecute:
           - echo "smoke_test"
           - sleep 3
+          - set_run_name "V${run_number}.0.0"
         onSuccess:
           - write_output run_prop_smoke runNumber=${run_number}
 
@@ -65,6 +67,7 @@ pipelines:
         onExecute:
           - echo "smoke_test"
           - sleep 10
+          - set_run_name "V${run_number}.0.0"
         onSuccess:
           - write_output run_prop_integration runNumber=${run_number}
 
@@ -79,6 +82,7 @@ pipelines:
         onExecute:
           - echo "promote artifacts"
           - sleep 2
+          - set_run_name "V${run_number}.0.0"
 
   - name: stag_env_deployment
     steps:
@@ -91,3 +95,4 @@ pipelines:
         onExecute:
           - echo "staging deployment"
           - sleep 10
+          - set_run_name "V${run_number}.0.0"
