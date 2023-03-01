@@ -18,16 +18,21 @@ pipelines:
     - name: smoketest
       type: Bash
       configuration:
-        inputResources:
-          - name: docker_push_webhook_res
+        inputSteps:
+          - name: test_env_deploy
+      execution:
+        onExecute:
+          - echo "smoke_test"
+    - name: integration_test
+      type: Bash
+      configuration:
+        inputSteps:
+          - name: test_env_deploy
       execution:
         onExecute:
           - echo "smoke_test"
     - name: promote_artifact
       type: Bash
-      configuration:
-        inputResources:
-          - name: docker_push_webhook_res
       execution:
         onExecute:
           - echo "promote artifacts"
