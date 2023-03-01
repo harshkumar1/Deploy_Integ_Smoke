@@ -37,6 +37,7 @@ pipelines:
           - write_output run_prop_deploy runNumber=${run_number}
 
   - name: smoke_test
+    steps:
     - name: smoketest
       type: Bash
       configuration:
@@ -52,6 +53,7 @@ pipelines:
           - write_output run_prop_smoke runNumber=${run_number}
 
   - name: integration_test
+    steps:
     - name: integration_test
       type: Bash
       configuration:
@@ -67,6 +69,7 @@ pipelines:
           - write_output run_prop_integration runNumber=${run_number}
 
   - name: promote_artifacts
+    steps:
     - name: promote_artifact
       type: Bash
       configuration:
