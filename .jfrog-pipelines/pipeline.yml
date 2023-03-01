@@ -3,7 +3,11 @@ resources:
     type: IncomingWebhook
     configuration:
       webhookName: docker_push_iw
- 
+  - name: integration_test_info
+    type: BuildInfo
+    configuration:
+      sourceArtifactory: Artifactory
+
 pipelines:
   - name: integration_test
     steps:
@@ -28,11 +32,16 @@ pipelines:
       configuration:
         inputSteps:
           - name: test_env_deploy
+        outputResources:
+          - name: integration_test_info
       execution:
         onExecute:
           - echo "smoke_test"
     - name: promote_artifact
       type: Bash
+      configuration:
+        inputResources:
+          - name: integration_test_info
       execution:
         onExecute:
           - echo "promote artifacts"
