@@ -20,7 +20,7 @@ resources:
       key2: value2
 
 pipelines:
-  - name: test_env_deployment
+  - name: demo_test_env_deployment
     steps:
     - name: test_env_deploy
       type: Bash
@@ -37,7 +37,7 @@ pipelines:
         onSuccess:
           - write_output run_prop_deploy runNumber=${run_number}
 
-  - name: smoke_test
+  - name: demo_smoke_test
     steps:
     - name: smoketest
       type: Bash
@@ -54,7 +54,7 @@ pipelines:
         onSuccess:
           - write_output run_prop_smoke runNumber=${run_number}
 
-  - name: integration_test
+  - name: demo_integration_test
     steps:
     - name: integration_test
       type: Bash
@@ -71,7 +71,7 @@ pipelines:
         onSuccess:
           - write_output run_prop_integration runNumber=${run_number}
 
-  - name: promote_artifacts
+  - name: demo_promote_artifacts
     steps:
     - name: promote_artifact
       type: Bash
@@ -84,7 +84,7 @@ pipelines:
           - sleep 2
           - set_run_name "V${run_number}.0.0"
 
-  - name: stag_env_deployment
+  - name: demo_stag_env_deployment
     steps:
     - name: stag_env_deploy
       type: Bash
