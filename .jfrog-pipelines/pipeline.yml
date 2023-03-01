@@ -16,6 +16,7 @@ pipelines:
       configuration:
         inputResources:
           - name: docker_push_webhook_res
+          - name: runpoppropin
       execution:
         onExecute:
           - echo "deploy"
