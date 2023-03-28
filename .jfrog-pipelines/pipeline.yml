@@ -25,11 +25,6 @@ resources:
       path: harshkumar1/deploy_integ_smoke
 
 pipelines:
-  - configuration:
-      environmentVariables:
-        readOnly:
-          reportsCount: 10
-          suitesCount: 10
   - name: demo_test_env_deployment
     steps:
     - name: test_env_deploy
@@ -67,12 +62,16 @@ pipelines:
   - name: demo_integration_test
     steps:
     - name: integration_test
-      type: Bash
+      type: Bash 
       configuration:
         inputResources:
           - name: run_prop_smoke
         outputResources:
           - name: run_prop_integration
+        environmentVariables:
+          readOnly:
+            reportsCount: 10
+            suitesCount: 10
       execution:
         onExecute:
           - echo "smoke_test"
