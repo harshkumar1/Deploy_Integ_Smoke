@@ -18,8 +18,18 @@ resources:
     configuration:
       key1: value1
       key2: value2
+  - name: git_repo_integ_test
+    type: GitRepo
+    configuration:
+      gitProvider: Github
+      path: harshkumar1/deploy_integ_smoke
 
 pipelines:
+  - configuration:
+      environmentVariables:
+        readOnly:
+          reportsCount: 10
+          suitesCount: 10
   - name: demo_test_env_deployment
     steps:
     - name: test_env_deploy
@@ -66,7 +76,16 @@ pipelines:
       execution:
         onExecute:
           - echo "smoke_test"
-          - sleep 10
+          - pushd $res_git_repo_integ_test_resourcePath
+          - npm install
+          - touch .env
+          - echo "REPORTS_COUNT=$reportsCount" >> .env
+          - echo "SUITES_COUNT=$suitesCount" >> .env
+          - TOTAL_TESTS=$(($reportsCount*$suitesCount))
+          # - update_run_description "Total tests => $TOTAL_TESTS"
+          # - set_run_name $TOTAL_TESTS
+          - npm run test
+          - save_tests $res_testTrigger_resourcePath/
           - set_run_name "V${run_number}.0.0"
         onSuccess:
           - write_output run_prop_integration runNumber=${run_number}
