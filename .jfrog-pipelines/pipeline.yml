@@ -60,7 +60,7 @@ pipelines:
           - write_output run_prop_smoke runNumber=${run_number}
 
   - name: demo_integration_test
-    configuation:
+    configuration:
       environmentVariables:
         readOnly:
           reportsCount: 10
