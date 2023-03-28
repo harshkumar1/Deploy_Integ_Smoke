@@ -76,7 +76,7 @@ pipelines:
       execution:
         onExecute:
           - echo "smoke_test"
-          - pushd $res_git_repo_integ_test_resourcePath
+          #- pushd $res_git_repo_integ_test_resourcePath
           - npm install
           - touch .env
           - echo "REPORTS_COUNT=$reportsCount" >> .env
