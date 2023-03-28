@@ -32,6 +32,7 @@ pipelines:
       configuration:
         inputResources:
           - name: docker_push_webhook_res
+          - name: git_repo_integ_test
         outputResources:
           - name: run_prop_deploy
       execution:
