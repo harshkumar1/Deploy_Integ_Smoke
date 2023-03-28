@@ -21,7 +21,7 @@ resources:
   - name: git_repo_integ_test
     type: GitRepo
     configuration:
-      gitProvider: Github
+      gitProvider: hk_github
       path: harshkumar1/deploy_integ_smoke
 
 pipelines:
