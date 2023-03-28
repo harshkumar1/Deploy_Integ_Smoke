@@ -1,0 +1,73 @@
+resources:
+  - name: buildGitRepo
+    type: GitRepo
+    configuration:
+      gitProvider: vootla_git
+      path: ChaitanyaVootla/jfrogMultiTest
+      branches:
+        include: main
+  - name: publish_buildInfo
+    type: BuildInfo
+    configuration:
+      sourceArtifactory: artVootla
+      buildName: buildsplayground
+      buildNumber: ${run_number}
+  - name: promote_buildInfo
+    type: BuildInfo
+    configuration:
+      sourceArtifactory: artVootla
+
+pipelines:
+  - name: builds_playground
+    steps:
+      - name: docker_build
+        type: DockerBuild
+        configuration:
+          affinityGroup: docker_group
+          dockerFileLocation: utils
+          dockerFileName: Dockerfile
+          dockerImageName: stg-repo.jfrog.info/buildsplayground/testimages
+          dockerImageTag: ${run_number}-build1
+          inputResources:
+            - name: buildGitRepo
+          integrations:
+            - name: artVootla
+
+      - name: docker_push
+        type: DockerPush
+        configuration:
+          affinityGroup: docker_group
+          targetRepository: buildsplayground
+          autoPublishBuildInfo: true
+          integrations:
+            - name: artVootla
+          inputSteps:
+            - name: docker_build
+          outputResources:
+            - name: publish_buildInfo
+
+      - name: bash_builds
+        type: Bash
+        configuration:
+          integrations:
+            - name: artVootla
+          inputSteps:
+            - name: docker_build
+        execution:
+          onExecute:
+            - touch test.txt
+            - echo "Hello World" > test.txt
+            - cat test.txt
+            # - save_artifact_info 'file' './test.txt'
+            - save_artifact_info 'buildInfo' './test.txt' --build-name bash_builds_vootla --build-number ${run_number}
+
+
+
+      # - name: publish_app_build
+      #   type: PublishBuildInfo
+      #   configuration:
+      #     affinityGroup: docker_group
+      #     inputSteps:
+      #       - name: docker_push
+      #     outputResources:
+      #       - name: publish_buildInfo
