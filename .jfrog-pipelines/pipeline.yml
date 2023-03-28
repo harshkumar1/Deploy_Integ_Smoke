@@ -60,6 +60,11 @@ pipelines:
           - write_output run_prop_smoke runNumber=${run_number}
 
   - name: demo_integration_test
+    configuation:
+      environmentVariables:
+        readOnly:
+          reportsCount: 10
+          suitesCount: 10
     steps:
     - name: integration_test
       type: Bash 
@@ -68,10 +73,6 @@ pipelines:
           - name: run_prop_smoke
         outputResources:
           - name: run_prop_integration
-        environmentVariables:
-          readOnly:
-            reportsCount: 10
-            suitesCount: 10
       execution:
         onExecute:
           - echo "smoke_test"
