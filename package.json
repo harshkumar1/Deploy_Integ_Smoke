@@ -7,7 +7,7 @@
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/ChaitanyaVootla/jfrogMultiTest.git"
+    "url": "git+https://github.com/harshkumar1/Deploy_Integ_Smoke.git"
   },
   "dependencies": {
     "junit-xml": "1.2.0",
