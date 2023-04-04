@@ -65,17 +65,22 @@ pipelines:
         readOnly:
           reportsCount: 10
           suitesCount: 10
-    steps:
-    - name: integration_test
-      type: Bash 
-      configuration:
-        inputResources:
-          - name: run_prop_smoke
-        outputResources:
-          - name: run_prop_integration
-      execution:
-        onExecute:
-          - echo "smoke_test"
+
+	  steps:	
+      - name: integration_test	
+        type: Bash	
+        configuration:	
+          inputResources:	
+            - name: run_prop_smoke	
+          outputResources:	
+            - name: run_prop_integration	
+        execution:	
+          onExecute:	
+            - echo "smoke_test"	
+            - sleep 10	
+            - set_run_name "V${run_number}.0.0"	
+          onSuccess:	
+            - write_output run_prop_integration runNumber=${run_number}
 
   - name: demo_promote_artifacts
     steps:
