@@ -76,7 +76,7 @@ pipelines:
       execution:
         onExecute:
           - echo "smoke_test"
-        onSuccess:
+
   - name: demo_promote_artifacts
     steps:
     - name: promote_artifact
