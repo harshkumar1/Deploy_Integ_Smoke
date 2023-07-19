@@ -23,6 +23,28 @@ resources:
     configuration:
       gitProvider: hk_github
       path: harshkumar1/deploy_integ_smoke
+  - name: docker_push_artifact_1        #<string>
+    type: Artifact
+    configuration:
+        jfrogPlatformProvider: hk_jpd_token
+        repositories:
+          - demo-docker-local
+        #artifactPath:    
+          #include:
+            #- pattern_1
+            #- pattern_2
+          #exclude:
+            #- pattern_1
+            #- pattern_2
+        branches:
+          include: master
+          #exclude:     <excludePattern>   
+        buildOn:
+          #deployed:    <boolean>
+          #deleted:     <boolean>
+          #copied:      <boolean>
+          moved: true       #<boolean>
+          #cached:      <boolean>
 
 pipelines:
   - name: demo_test_env_deployment
@@ -31,7 +53,8 @@ pipelines:
       type: Bash
       configuration:
         inputResources:
-          - name: docker_push_webhook_res
+          #- name: docker_push_webhook_res
+          - name: docker_push_artifact_1
         outputResources:
           - name: run_prop_deploy
       execution:
