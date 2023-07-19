@@ -23,7 +23,7 @@ resources:
     configuration:
       gitProvider: hk_github
       path: harshkumar1/deploy_integ_smoke
-  - name: docker_push_artifact_1        #<string>
+  - name: docker_push_artifact_2        #<string>
     type: Artifact
     configuration:
         jfrogPlatformProvider: hk_jpd_token
@@ -42,8 +42,8 @@ resources:
         buildOn:
           #deployed:    <boolean>
           #deleted:     <boolean>
-          #copied:      <boolean>
-          moved: true       #<boolean>
+          copied: true
+          #moved: true       #<boolean>
           #cached:      <boolean>
 
 pipelines:
@@ -54,7 +54,7 @@ pipelines:
       configuration:
         inputResources:
           #- name: docker_push_webhook_res
-          - name: docker_push_artifact_1
+          - name: docker_push_artifact_2
         outputResources:
           - name: run_prop_deploy
       execution:
