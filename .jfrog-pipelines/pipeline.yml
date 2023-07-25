@@ -63,9 +63,9 @@ pipelines:
         onExecute:
           - echo "deploy"
           - sleep 5
-          - set_run_name "V${run_number}.0.0"
+          - set_run_name $res_mvn_artifact_4_event_path
         onSuccess:
-          - write_output run_prop_deploy runNumber=${run_number}
+          - write_output run_prop_deploy artifact=$res_mvn_artifact_4_event_path
 
   - name: demo_smoke_test
     steps:
