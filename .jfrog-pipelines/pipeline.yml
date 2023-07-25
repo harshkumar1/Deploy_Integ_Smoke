@@ -45,6 +45,21 @@ resources:
           copied: true
           moved: true       #<boolean>
           #cached:      <boolean>
+  - name: anyArtifactChange
+    type: Artifact
+    configuration: 
+      jfrogPlatformProvider: newAdminTokenIntegration 
+      repositories:
+        - swft-BSC_Gen3_USStrategy
+      artifactPath:
+        include:
+          - Test3/*
+      buildOn:
+        deployed: true
+        cached: true
+        deleted: true
+      branches:
+        include: artifactResource
 
 pipelines:
   - name: demo_test_env_deployment
@@ -137,3 +152,13 @@ pipelines:
           - echo "staging deployment"
           - sleep 10
           - set_run_name "V${run_number}.0.0"
+  - name: pipeline_bundle_Test
+    steps:
+      - name: bundle1_step1
+        type: Bash
+        configuration:
+          inputResources:
+            - name: anyArtifactChange
+        execution:
+          onExecute:
+            - echo "There has been a new update to the swft-BSC_Gen3_USStrategy"
