@@ -23,12 +23,12 @@ resources:
     configuration:
       gitProvider: hk_github
       path: harshkumar1/deploy_integ_smoke
-  - name: docker_push_artifact_2        #<string>
+  - name: docker_push_artifact_3        #<string>
     type: Artifact
     configuration:
         jfrogPlatformProvider: hk_jpd_token
         repositories:
-          - demo-docker-local
+          - demo-mvn-local
         #artifactPath:    
           #include:
             #- pattern_1
