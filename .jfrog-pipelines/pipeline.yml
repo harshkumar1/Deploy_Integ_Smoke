@@ -40,9 +40,9 @@ resources:
           include: master
           #exclude:     <excludePattern>   
         buildOn:
-          #deployed:    <boolean>
+          deployed: true
           #deleted:     <boolean>
-          copied: true
+          #copied: true
           #moved: true       #<boolean>
           #cached:      <boolean>
 
