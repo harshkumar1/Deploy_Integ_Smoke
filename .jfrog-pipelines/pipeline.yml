@@ -54,7 +54,7 @@ pipelines:
       configuration:
         inputResources:
           #- name: docker_push_webhook_res
-          - name: docker_push_artifact_2
+          - name: docker_push_artifact_3
         outputResources:
           - name: run_prop_deploy
       execution:
