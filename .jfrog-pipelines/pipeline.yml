@@ -48,6 +48,17 @@ resources:
 
 pipelines:
   - name: demo_test_env_deployment
+    preRun: 
+      execution: 
+        onExecute: 
+          - echo "Executing Pre Run"
+          - set_run_name $res_mvn_artifact_4_event_path 
+          - update_run_description "Triggered on Event $res_mvn_artifact_4_event_type for Artifact $res_mvn_artifact_4_event_path"
+    postRun: 
+      execution: 
+        onExecute: 
+          - printenv 
+          - echo "Executing Post Run"
     steps:
     - name: test_env_deploy
       type: Bash
@@ -58,8 +69,8 @@ pipelines:
         outputResources:
           - name: run_prop_deploy
       execution:
-        onStart:
-          - update_run_description "Triggered on Event $res_mvn_artifact_4_event_type for Artifact $res_mvn_artifact_4_event_path"
+        #onStart:
+        #  - update_run_description "Triggered on Event $res_mvn_artifact_4_event_type for Artifact $res_mvn_artifact_4_event_path"
         onExecute:
           - echo "deploy"
           - sleep 5
