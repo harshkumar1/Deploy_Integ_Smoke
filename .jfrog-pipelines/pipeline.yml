@@ -23,10 +23,10 @@ resources:
     configuration:
       gitProvider: hk_github
       path: harshkumar1/deploy_integ_smoke
-  - name: mvn_artifact_2        #<string>
+  - name: mvn_artifact_3        #<string>
     type: Artifact
     configuration:
-        jfrogPlatformProvider: hk_jpd_token
+        jfrogPlatformProvider: newAdminTokenIntegration
         repositories:
           - demo-mvn-local
         #artifactPath:    
@@ -41,7 +41,7 @@ resources:
           #exclude:     <excludePattern>   
         buildOn:
           deployed: true
-          #deleted:     <boolean>
+          deleted: true    #<boolean>
           copied: true
           moved: true       #<boolean>
           #cached:      <boolean>
@@ -54,7 +54,7 @@ pipelines:
       configuration:
         inputResources:
           #- name: docker_push_webhook_res
-          - name: mvn_artifact_2
+          - name: mvn_artifact_3
         outputResources:
           - name: run_prop_deploy
       execution:
