@@ -59,7 +59,7 @@ pipelines:
           - name: run_prop_deploy
       execution:
         onStart:
-          - update_run_description "Triggered on Event $res_pipeline_trigger_event_type for Repo $res_pipeline_trigger_event_path"
+          - update_run_description "Triggered on Event $res_mvn_artifact_4_event_type for Repo $res_mvn_artifact_4_event_path"
         onExecute:
           - echo "deploy"
           - sleep 5
