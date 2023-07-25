@@ -23,7 +23,7 @@ resources:
     configuration:
       gitProvider: hk_github
       path: harshkumar1/deploy_integ_smoke
-  - name: mvn_artifact_3        #<string>
+  - name: mvn_artifact_4        #<string>
     type: Artifact
     configuration:
         jfrogPlatformProvider: newAdminTokenIntegration
@@ -37,7 +37,7 @@ resources:
             #- pattern_1
             #- pattern_2
         branches:
-          include: master
+          include: main
           #exclude:     <excludePattern>   
         buildOn:
           deployed: true
@@ -54,7 +54,7 @@ pipelines:
       configuration:
         inputResources:
           #- name: docker_push_webhook_res
-          - name: mvn_artifact_3
+          - name: mvn_artifact_4
         outputResources:
           - name: run_prop_deploy
       execution:
